@@ -247,7 +247,7 @@ export default {
     rentals: 'Rentals',
     booking: 'Booking',
     application: 'Application',
-    status: 'Status',
+  // label for status column
     startDate: 'Start Date',
     endDate: 'End Date',
     duration: 'Duration',
@@ -255,6 +255,19 @@ export default {
     deposit: 'Deposit',
     monthlyRent: 'Monthly Rent',
     dueDate: 'Due Date',
+    // Additional keys used by MyRentalsPage
+    myRentals: 'My Rentals',
+    myRentalsDesc: 'View your current rentals',
+    statusLabel: 'Status',
+    status: {
+      pending: 'Pending',
+      approved: 'Approved',
+      rejected: 'Rejected',
+      active: 'Active',
+      expired: 'Expired',
+      cancelled: 'Cancelled',
+      terminated: 'Terminated',
+    },
     
     // Rental status
     statuses: {
@@ -273,6 +286,25 @@ export default {
       rentalExpiring: 'Rental expires in :days days',
       renewalNeeded: 'Renewal needed',
     },
+    // UI specific / page-specific strings
+    activeRental: 'Active Rental',
+    pendingApproval: 'Pending Approval',
+    pendingDesc: 'Your rental application is pending owner approval.',
+    nextPayment: 'Next Payment',
+    daysUntilExpiry: 'days until expiry',
+    expiredOn: 'Expired on',
+    terminated: 'Terminated',
+    terminatedOn: 'Terminated on',
+    rejected: 'Rejected',
+    expired: 'Expired',
+    empty: {
+      title: 'No rentals',
+      description: 'You have no current rentals.',
+      filtered: 'No rentals with this status',
+      filteredDesc: 'No rentals found for the selected filter.',
+    },
+    per: 'per',
+    month: 'month',
   },
 
   // Payment
@@ -359,6 +391,14 @@ export default {
 
   // Generic labels
   notes: 'Notes',
+  // Common small strings used across pages
+  all: 'All',
+  view: 'View',
+  details: 'Details',
+  room: 'Room',
+  per: 'per',
+  month: 'month',
+  reason: 'Reason',
 
   // Notifications
   notification: {

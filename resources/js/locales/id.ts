@@ -224,7 +224,7 @@ export default {
     rentals: 'Sewa',
     booking: 'Pemesanan',
     application: 'Aplikasi',
-    status: 'Status',
+  statusLabel: 'Status',
     startDate: 'Tanggal Mulai',
     endDate: 'Tanggal Berakhir',
     duration: 'Durasi',
@@ -232,6 +232,19 @@ export default {
     deposit: 'Deposit',
     monthlyRent: 'Sewa Bulanan',
     dueDate: 'Jatuh Tempo',
+    // Additional keys used by MyRentalsPage
+    myRentals: 'Sewa Saya',
+    myRentalsDesc: 'Lihat sewa Anda saat ini',
+    // Aliases to keep backward compatibility with components expecting `status` key
+    status: {
+      pending: 'Menunggu',
+      approved: 'Disetujui',
+      rejected: 'Ditolak',
+      active: 'Aktif',
+      expired: 'Berakhir',
+      cancelled: 'Dibatalkan',
+      terminated: 'Dihentikan',
+    },
     
     // Rental status
     statuses: {
@@ -250,6 +263,25 @@ export default {
       rentalExpiring: 'Sewa akan berakhir dalam :days hari',
       renewalNeeded: 'Perpanjangan diperlukan',
     },
+    // UI specific / page-specific strings
+    activeRental: 'Sewa Aktif',
+    pendingApproval: 'Menunggu Persetujuan',
+    pendingDesc: 'Aplikasi sewa Anda sedang menunggu persetujuan pemilik.',
+    nextPayment: 'Pembayaran Berikutnya',
+    daysUntilExpiry: 'hari sampai berakhir',
+    expiredOn: 'Berakhir pada',
+    terminated: 'Dihentikan',
+    terminatedOn: 'Dihentikan pada',
+    rejected: 'Ditolak',
+    expired: 'Berakhir',
+    empty: {
+      title: 'Tidak ada sewa',
+      description: 'Anda belum memiliki sewa saat ini.',
+      filtered: 'Tidak ada sewa dengan status ini',
+      filteredDesc: 'Tidak ditemukan sewa sesuai dengan filter yang dipilih.',
+    },
+    per: 'per',
+    month: 'bulan',
   },
 
   // Payment
@@ -336,6 +368,14 @@ export default {
 
   // Generic labels
   notes: 'Catatan',
+  // Common small strings used across pages
+  all: 'Semua',
+  view: 'Lihat',
+  details: 'Detail',
+  room: 'Kamar',
+  per: 'per',
+  month: 'bulan',
+  reason: 'Alasan',
 
   // Notifications
   notification: {

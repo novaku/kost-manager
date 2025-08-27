@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslation } from '@/contexts/TranslationContext';
-import { Locale } from '@/locales';
 import { Payment } from '@/types';
 import apiService from '@/services/api';
 import { 
@@ -20,7 +19,7 @@ import {
 
 const PaymentsPage: React.FC = () => {
   const { user } = useAuth();
-  const { t, locale, setLocale, availableLocales } = useTranslation();
+  const { t } = useTranslation();
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -210,11 +209,7 @@ const PaymentsPage: React.FC = () => {
     { value: 'other', label: t('payment.type.other') }
   ];
 
-  // Simple labels for locales. Add more if you enable additional locales in `translations`.
-  const localeLabels: Record<string, string> = {
-    en: 'English',
-    id: 'Bahasa Indonesia',
-  };
+  // language selector removed from UI
 
   // Allow both tenants and owners to access this page.
   // Only block access when there's no authenticated user.
@@ -259,22 +254,7 @@ const PaymentsPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Language switcher */}
-        <div className="flex items-center space-x-2">
-          <label htmlFor="locale" className="text-sm text-gray-600">{t('language')}</label>
-          <select
-            id="locale"
-            value={availableLocales.includes(locale as any) ? locale : 'id'}
-            onChange={(e) => setLocale(e.target.value as Locale)}
-            className="px-3 py-2 border border-gray-300 rounded-md bg-white text-sm"
-          >
-            {availableLocales.map((loc) => (
-              <option key={loc} value={loc}>
-                {localeLabels[loc] || loc}
-              </option>
-            ))}
-          </select>
-        </div>
+  {/* language switcher removed */}
       </div>
 
       {/* Filters */}
