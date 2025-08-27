@@ -8,7 +8,12 @@ import {
   BuildingOfficeIcon, 
   UserIcon, 
   Bars3Icon, 
-  XMarkIcon 
+  XMarkIcon,
+  ChartBarIcon,
+  CreditCardIcon,
+  ArrowRightOnRectangleIcon,
+  UserPlusIcon,
+  DocumentTextIcon,
 } from '@heroicons/react/24/outline';
 
 interface LayoutProps {
@@ -26,14 +31,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { name: t('nav.kostans'), href: '/kostans', icon: BuildingOfficeIcon },
   ];
 
+  // Hide the public "Kostans" page link for users with role 'owner'
+  const filteredNavigation = navigation.filter(
+    (item) => !(user?.role === 'owner' && item.href === '/kostans')
+  );
+
   const userNavigation = isAuthenticated ? [
-  { name: t('nav.dashboard'), href: '/dashboard' },
-    ...(user?.role === 'owner' ? [{ name: t('nav.myKostans'), href: '/my-kostans' }] : []),
-    ...(user?.role === 'tenant' ? [{ name: t('nav.myRentals'), href: '/my-rentals' }] : []),
-    { name: t('nav.payments'), href: '/payments' },
+    { name: t('nav.dashboard'), href: '/dashboard', icon: ChartBarIcon },
+    ...(user?.role === 'owner' ? [{ name: t('nav.myKostans'), href: '/my-kostans', icon: BuildingOfficeIcon }] : []),
+    ...(user?.role === 'tenant' ? [{ name: t('nav.myRentals'), href: '/my-rentals', icon: DocumentTextIcon }] : []),
+    { name: t('nav.payments'), href: '/payments', icon: CreditCardIcon },
   ] : [
-    { name: t('nav.login'), href: '/login' },
-    { name: t('nav.register'), href: '/register' },
+    { name: t('nav.login'), href: '/login', icon: ArrowRightOnRectangleIcon },
+    { name: t('nav.register'), href: '/register', icon: UserPlusIcon },
   ];
 
   const toggleMobileMenu = () => {
@@ -61,7 +71,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <nav className="hidden sm:flex bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto w-full px-4 flex justify-between items-center h-16">
           <div className="flex items-center space-x-8">
-            {navigation.map((item) => {
+            {filteredNavigation.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.href;
               return (
@@ -83,15 +93,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="flex items-center space-x-4">
             {isAuthenticated ? (
               <>
-                {userNavigation.filter(item => item.href !== '/profile').map((item) => (
+                {userNavigation.filter(item => item.href !== '/profile').map((item) => {
+                  const Icon = item.icon;
+                  return (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium flex items-center"
                   >
+                    {Icon && <Icon className="w-4 h-4 mr-2 text-gray-400" />}
                     {item.name}
                   </Link>
-                ))}
+                  );
+                })}
                 <Link
                   to="/profile"
                   className="flex items-center text-sm text-gray-500 hover:text-gray-700"
@@ -128,11 +142,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </nav>
 
       {/* Mobile menu overlay */}
-      {isMobileMenuOpen && (
+            {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 bg-black bg-opacity-30 sm:hidden">
           <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-lg p-4">
             <div className="flex flex-col gap-2">
-              {navigation.map((item) => {
+              {filteredNavigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.href;
                 return (
@@ -160,16 +174,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     <div className="text-sm text-gray-500">{user?.email}</div>
                   </div>
                   <div className="flex flex-col gap-2">
-                    {userNavigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block px-3 py-2 rounded-lg text-base font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
+                        {userNavigation.map((item) => {
+                          const Icon = item.icon;
+                          return (
+                          <Link
+                            key={item.name}
+                            to={item.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="flex items-center px-3 py-2 rounded-lg text-base font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                          >
+                            {Icon && <Icon className="w-5 h-5 mr-3 text-gray-400" />}
+                            {item.name}
+                          </Link>
+                          );
+                        })}
                     <button
                       onClick={() => {
                         logout();
@@ -183,20 +201,24 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </>
               ) : (
                 <div className="flex flex-col gap-2">
-                  {userNavigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block px-3 py-2 rounded-lg text-base font-medium ${
-                        item.name === t('nav.register')
-                          ? 'bg-blue-600 text-white hover:bg-blue-700'
-                          : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                      }`}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
+                  {userNavigation.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className={`flex items-center px-3 py-2 rounded-lg text-base font-medium ${
+                            item.name === t('nav.register')
+                              ? 'bg-blue-600 text-white hover:bg-blue-700'
+                              : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                          }`}
+                        >
+                          {Icon && <Icon className="w-5 h-5 mr-3 text-white/80" />}
+                          {item.name}
+                        </Link>
+                      );
+                    })}
                 </div>
               )}
             </div>
@@ -211,7 +233,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* Mobile bottom tab navigation */}
       <nav className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-gray-200 flex sm:hidden">
-        {navigation.map((item) => {
+  {filteredNavigation.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.href;
           return (
