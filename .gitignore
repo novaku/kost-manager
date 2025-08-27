@@ -1,0 +1,12 @@
+/vendor/
+/node_modules/
+/.env
+/.env.*
+/storage/
+/public/storage
+/.idea/
+/.vscode/
+/.DS_Store
+/build/
+/database/database.sqlite
+/.phpunit.result.cache
